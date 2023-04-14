@@ -1,4 +1,5 @@
-#DSE1101 Week 12 lab
+#DSE1101 Week 12 lab hello
+
 
 ##########################################################################
 ###Here we cover some basics on implementing principal component analysis
