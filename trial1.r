@@ -34,3 +34,22 @@ biplot(prall)
 window()
 #To get to the scree plot, first summarize the prcomp object:
 prall.s = summary(prall)
+
+###Kernel Density Estimation
+rm(list = ls()) 
+install.packages("ks") 
+library(ks) 
+library(readr)
+
+data1 <- read_csv("C:/Users/jeron/OneDrive/Desktop/Hackathons/crash_info_general.csv")
+#we just want to test with the first 1000 rows
+set.seed(1)
+sampled_rows <- sample(1:1000, round(0.1 * 1000), replace = FALSE)
+data <- data1[sampled_rows, ]
+class(data)
+
+X11()
+plot(kde(data$ILLUMINATION, h = 0.1), main = "ILLUMINATION Kernel Density Estimate - h=0.1", xlab = "ILLUMINATION")
+plot(kde(data$ILLUMINATION, h = 0.3), main = "ILLUMINATION Kernel Density Estimate - h=0.3", xlab = "ILLUMINATION")
+plot(kde(data$ILLUMINATION, h = 0.5), main = "ILLUMINATION Kernel Density Estimate - h=0.5", xlab = "ILLUMINATION")
+plot(kde(data$ILLUMINATION, h = 0.7), main = "ILLUMINATION Kernel Density Estimate - h=0.7", xlab = "ILLUMINATION")
