@@ -1,5 +1,9 @@
 library(readr)
 library(tidyverse)
+library(xgboost)
+library(caret)
+library(scales)
+library(ks)
 
 investigations_data = read_csv("investigations.csv")
 crimes_data = read_csv("crimes.csv")
@@ -27,8 +31,6 @@ crash_general %>% filter(ROAD_CONDITION != 1) %>% pull(FATAL_COUNT) %>% mean()
 
 investigations_data %>% drop_na() %>% ggplot(aes(y=lat)) + geom_histogram()
 
-library(xgboost)
-library(caret)
 
 colnames(crash_general)
 
@@ -48,11 +50,10 @@ crash_general = read_csv("crash_info_general.csv")
 crashroadwayspeed = crashroadway[complete.cases(crashroadway$SPEED_LIMIT), ]
 
 # plotting kde for car crashes across different types of roadways
-library(ks) #library for kernel density estimation 
 plot(kde(crashroadwayspeed$ROAD_OWNER, h = 0.2), main = "Roadway maintained by state, local or private jurisdiction", xlab = "Crashes")
 
 # plotting piechart for % of crashes which took place at an Unsignalized Intersection
-library(scales)
+
 pie(c(sum(flag_variables$UNSIGNALIZED_INT == 0), sum(flag_variables$UNSIGNALIZED_INT == 1))
     , labels = paste0(c("No","Yes"), "\n", percent(c(sum(flag_variables$UNSIGNALIZED_INT == 0), sum(flag_variables$UNSIGNALIZED_INT == 1))/sum(c(sum(flag_variables$UNSIGNALIZED_INT == 0), sum(flag_variables$UNSIGNALIZED_INT == 1)))))
     , col = c("red", "green"), 
